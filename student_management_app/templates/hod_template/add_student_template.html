@@ -16,7 +16,7 @@
                     <!-- general form elements -->
                     <div class="card card-primary">
                     <div class="card-header">
-                        <h3 class="card-title">Add Student</h3>
+                        <h3 class="card-title">Add Studentd</h3>
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
@@ -45,7 +45,7 @@
 
                 if(email!=""){
                     $.ajax({
-                        url : '{% url 'check_email_exist' %}',
+                        url : '{% url "check_email_exist" %}',
                         type : 'POST',
                         data : {email:email}
                     })
@@ -77,7 +77,7 @@
                 
                 if(username!=""){
                     $.ajax({
-                        url : '{% url 'check_username_exist' %}',
+                        url : '{% url "check_username_exist" %}',
                         type : 'POST',
                         data : {username:username}
                     })

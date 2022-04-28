@@ -12,7 +12,7 @@ from .models import CustomUser, Staffs, Courses, Subjects, Students, SessionYear
 
 
 def admin_home(request):
-    print("apun sbka baap h")
+    
     print(request.user.user_type)
     all_student_count = Students.objects.all().count()
     subject_count = Subjects.objects.all().count()
@@ -791,6 +791,5 @@ def staff_profile(request):
 
 def student_profile(requtest):
     pass
-
 
 

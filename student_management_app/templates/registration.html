@@ -1,3 +1,4 @@
+
 {% extends 'base.html' %}
 {% load static %}
 
@@ -133,7 +134,7 @@ body{
                        
        <!--<input class="form-control mr-sm-2" type="Register" placeholder="Register" aria-label="Register">-->
      <a href="/login" class="btn btn-outline-success my-1 mx-2">Login Here</a>
-		<a href="/contact" class="btn btn-outline-danger my-1 mx-2">Contact Us</a>
+    <a href="/contact" class="btn btn-outline-danger my-1 mx-2">Contact Us</a>
                          <!--<input class="form-control mr-sm-2" type="register" placeholder="register" aria-label="register">-->
                      
                       </form>
@@ -143,16 +144,17 @@ body{
 
     <div class="login-dark form-inline py-0 mx-4 my-4 pl-4 pr-4">
          <form action="{% url 'doRegistration' %}" method="get">
-			{% csrf_token %}
+      {% csrf_token %}
 
-		<h1 class="text-center">Signup</h1>
+
+<h1 class="text-center">Signup</h1>
             <div class="illustration"><i class="icon ion-ios-locked-outline"></i></div>
-			 <div class="form-group"><input class="form-control mb-2" type="text" name="first_name" placeholder="First Name"></div>
+       <div class="form-group"><input class="form-control mb-2" type="text" name="first_name" placeholder="First Name"></div>
             <div class="form-group"><input class="form-control mb-2" type="text" name="last_name" placeholder="Last Name"></div>
 
             <div class="form-group"><input class="form-control mb-2" type="email" name="email" placeholder="Email"></div>
             <div class="form-group"><input class="form-control mb-2" type="password" name="password" placeholder="Password"></div>
-			<div class="form-group"><input class="form-control mb-2" type="password" name="confirmPassword" placeholder="Confirm Password"></div>
+      <div class="form-group"><input class="form-control mb-2" type="password" name="confirmPassword" placeholder="Confirm Password"></div>
             <div class="form-group"><button class="btn btn-primary btn-block mt-2 ml-2" type="submit">Register</button></div></form>
     </div>
  {% comment %} Display Messages {% endcomment %}

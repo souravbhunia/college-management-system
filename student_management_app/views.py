@@ -1,3 +1,5 @@
+from django.contrib.auth.hashers import make_password,check_password
+
 from django.shortcuts import render,HttpResponse, redirect,HttpResponseRedirect
 from django.contrib.auth import logout, authenticate, login
 from .models import CustomUser, Staffs, Students, AdminHOD
@@ -15,20 +17,32 @@ def loginUser(request):
 	return render(request, 'login_page.html')
 
 def doLogin(request):
-	
-	print("here")
+  
 	email_id = request.GET.get('email')
+	
 	password = request.GET.get('password')
 	# user_type = request.GET.get('user_type')
 	print(email_id)
-	print(password)
+	print('Pssword=',password)
 	print(request.user)
 	if not (email_id and password):
 		messages.error(request, "Please provide all the details!!")
 		return render(request, 'login_page.html')
-
-	user = CustomUser.objects.filter(email=email_id, password=password).last()
+	all_entries=CustomUser.objects.all()
+	print(CustomUser.HOD)
+	print(all_entries)
+	
+	user = CustomUser.objects.filter(email=email_id).last()
+	
+	print('My pass=',password)
+	print('USer=',user)
+	
 	if not user:
+		messages.error(request, 'Invalid Login Credentials!!')
+		return render(request, 'login_page.html')
+	true_pass=check_password(password,user.password)
+
+	if user and true_pass==False:
 		messages.error(request, 'Invalid Login Credentials!!')
 		return render(request, 'login_page.html')
 
@@ -50,6 +64,7 @@ def registration(request):
 	
 
 def doRegistration(request):
+
 	first_name = request.GET.get('first_name')
 	last_name = request.GET.get('last_name')
 	email_id = request.GET.get('email')
@@ -64,7 +79,7 @@ def doRegistration(request):
 	if not (email_id and password and confirm_password):
 		messages.error(request, 'Please provide all the details!!')
 		return render(request, 'registration.html')
-	
+
 	if password != confirm_password:
 		messages.error(request, 'Both passwords should match!!')
 		return render(request, 'registration.html')
@@ -90,12 +105,12 @@ def doRegistration(request):
 	user = CustomUser()
 	user.username = username
 	user.email = email_id
-	user.password = password
+	user.password = make_password(password)
 	user.user_type = user_type
 	user.first_name = first_name
 	user.last_name = last_name
 	user.save()
-	
+
 	if user_type == CustomUser.STAFF:
 		Staffs.objects.create(admin=user)
 	elif user_type == CustomUser.STUDENT:
@@ -115,7 +130,7 @@ def get_user_type_from_email(email_id):
 	Returns CustomUser.user_type corresponding to the given email address
 	email_id should be in following format:
 	'<username>.<staff|student|hod>@<college_domain>'
-	eg.: 'abhishek.staff@jecrc.com'
+	eg.: 'abhishek.staff@snuiv.com'
 	"""
 
 	try:
